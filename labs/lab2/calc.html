@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор комплексных чисел</title>
+    <link rel="stylesheet" href="CSS\styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <link rel="icon" type="image/png" href="images\icons\calculator-icon.png">
+</head>
+<body>
+    <div class="calculator">
+        <h1>Калькулятор комплексных чисел</h1>
+        <form id="calc-form">
+            <div class="form-group">
+                <label>Форма представления комплексных чисел:</label>
+                <label><input type="radio" name="form" value="exponential" checked> Показательная</label>
+                <label><input type="radio" name="form" value="trigonometric"> Тригонометрическая</label>
+                <button type="button" id="show-form">Показать</button>
+            </div>
+
+            <div id="input-fields">
+
+            </div>
+
+            <div class="form-group">
+                <label>Выберите операции:</label>
+                <label><input type="checkbox" name="operation" value="add"> Сумма</label>
+                <label><input type="checkbox" name="operation" value="subtract"> Разность</label>
+                <label><input type="checkbox" name="operation" value="multiply"> Произведение</label>
+                <label><input type="checkbox" name="operation" value="divide"> Частное</label>
+            </div>
+
+            <button type="button" id="calculate">Вычислить</button>
+            <button type="button" id="clear">Очистить</button>
+        </form>
+
+        <div id="results">
+        </div>
+
+        <div id="developer-links">
+            <a href="https://t.me/Foper" target="_blank">
+                <img src="images\icons\telegram-icon.svg" alt="Telegram" class="icon">
+            </a>
+            <a href="https://github.com/FoperGT" target="_blank">
+                <img src="images\icons\github-icon.svg" alt="GitHub" class="icon">
+            </a>
+        </div>
+    </div>
+
+    <script src="JS\script.js"></script>
+</body>
+</html>
