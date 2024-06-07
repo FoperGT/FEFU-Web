@@ -31,38 +31,35 @@ document.addEventListener('DOMContentLoaded', function() {
         let stats = {
             goals: 0,
             assists: 0,
-            yellowCards: Math.floor(Math.random() * 11), // от 0 до 10 желтых карточек
-            redCards: Math.floor(Math.random() * 3), // от 0 до 2 красных карточек
+            yellowCards: Math.floor(Math.random() * 11), 
+            redCards: Math.floor(Math.random() * 3), 
             matches: 0,
             minutes: 0,
-            averageRating: (6 + Math.random() * 4).toFixed(2) // от 6.00 до 10.00
+            averageRating: (6 + Math.random() * 4).toFixed(2) 
         };
     
-        // Учитываем, что игрок может сыграть максимум 38 матчей
         stats.matches = Math.min(Math.floor(Math.random() * 39), 38);
     
-        // Учитываем, что суммарное количество минут не может превышать количество сыгранных матчей * 90
         stats.minutes = Math.min(Math.floor(Math.random() * (stats.matches * 90 + 1)), stats.matches * 90);
     
-        // Если игрок получил более 2 красных карточек, уменьшаем максимальное количество матчей до 36
         if (stats.redCards > 2) {
             stats.matches = Math.max(0, stats.matches - (stats.redCards - 1));
         }
     
         switch (position) {
             case 'Вратарь':
-                stats.minutes = Math.min(stats.minutes, 3420); // ограничиваем количество минут для вратарей
+                stats.minutes = Math.min(stats.minutes, 3420); 
                 break;
             case 'Защитник':
-                stats.goals = Math.floor(Math.random() * 6); // от 0 до 5 голов
-                stats.assists = Math.floor(Math.random() * 6); // от 0 до 5 ассистов
+                stats.goals = Math.floor(Math.random() * 6);
+                stats.assists = Math.floor(Math.random() * 6); 
                 break;
             case 'Полузащитник':
-                stats.goals = Math.floor(Math.random() * 11); // от 0 до 10 голов
-                stats.assists = Math.floor(Math.random() * 11); // от 0 до 10 ассистов
+                stats.goals = Math.floor(Math.random() * 11); 
+                stats.assists = Math.floor(Math.random() * 11); 
                 break;
             case 'Нападающий':
-                stats.goals = Math.floor(Math.random() * 21); // от 0 до 20 голов
+                stats.goals = Math.floor(Math.random() * 21);
                 stats.assists = Math.floor(Math.random() * 11);
                 break;
         }
@@ -160,10 +157,10 @@ document.addEventListener('DOMContentLoaded', function() {
             const index = button.getAttribute('data-index');
             const type = document.querySelectorAll('th')[index].getAttribute('data-type');
             sortTable(index, type, ascending);
-            ascending = !ascending; // Переключаем направление сортировки
+            ascending = !ascending; 
         });
     });
 
     renderTable(allPlayers);
-    window.allPlayers = allPlayers; // Экспортируем allPlayers для доступа в других файлах
+    window.allPlayers = allPlayers; 
 });
