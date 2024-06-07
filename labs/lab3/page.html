@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Football Player Stats</title>
+    <link rel="stylesheet" href="CSS\styles.css">
+</head>
+<body>
+
+    <h1>Статистика игроков Премьер-лиги</h1>
+    
+    <button id="filter-button">Фильтр</button>
+
+    <div id="filter-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Фильтры</h2>
+            <label for="name-filter">Имя:</label>
+            <input type="text" id="name-filter">
+
+            <label for="club-filter">Клуб:</label>
+            <input type="text" id="club-filter">
+
+            <label for="goals-min-filter">Мин. голов:</label>
+            <input type="number" id="goals-min-filter">
+
+            <label for="goals-max-filter">Макс. голов:</label>
+            <input type="number" id="goals-max-filter">
+
+            <button id="apply-filter-button">Применить</button>
+        </div>
+    </div>
+
+    <table id="players-table">
+        <thead>
+            <tr>
+                <th data-type="string">Имя <button class="sort-button" data-index="0">&#8645;</button></th>
+                <th data-type="string">Клуб <button class="sort-button" data-index="1">&#8645;</button></th>
+                <th data-type="string">Позиция <button class="sort-button" data-index="2">&#8645;</button></th>
+                <th data-type="number">Голы <button class="sort-button" data-index="3">&#8645;</button></th>
+                <th data-type="number">Ассисты <button class="sort-button" data-index="4">&#8645;</button></th>
+                <th data-type="number">Желтые карточки <button class="sort-button" data-index="5">&#8645;</button></th>
+                <th data-type="number">Красные карточки <button class="sort-button" data-index="6">&#8645;</button></th>
+                <th data-type="number">Матчи <button class="sort-button" data-index="7">&#8645;</button></th>
+                <th data-type="number">Минуты <button class="sort-button" data-index="8">&#8645;</button></th>
+                <th data-type="number">Средний рейтинг <button class="sort-button" data-index="9">&#8645;</button></th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <script src="JS\generateTable.js"></script>
+    <script src="JS\filter.js"></script>
+</body>
+</html>
