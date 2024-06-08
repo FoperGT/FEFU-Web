@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Football Player Stats</title>
-    <link rel="stylesheet" href="CSS\styles.css">
+    <link rel="stylesheet" href="CSS/styles.css">
 </head>
 <body>
 
@@ -16,22 +16,67 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2>Фильтры</h2>
-            <label for="name-filter">Имя:</label>
-            <input type="text" id="name-filter">
 
-            <label for="club-filter">Клуб:</label>
-            <input type="text" id="club-filter">
+            <div class="form-grid">
+                <label for="name-filter">Имя:</label>
+                <input type="text" id="name-filter">
 
-            <label for="position-filter">Позиция:</label>
-            <input type="text" id="position-filter">
+                <label for="club-filter">Клуб:</label>
+                <select id="club-filter">
+                    <option value="">Выберите клуб</option>
+                </select>
 
-            <label for="goals-min-filter">Мин. голов:</label>
-            <input type="number" id="goals-min-filter">
+                <label for="position-filter">Позиция:</label>
+                <select id="position-filter">
+                    <option value="">Выберите позицию</option>
+                </select>
 
-            <label for="goals-max-filter">Макс. голов:</label>
-            <input type="number" id="goals-max-filter">
+                <label for="goals-min-filter">Мин. голов:</label>
+                <input type="number" id="goals-min-filter">
 
-            <button id="apply-filter-button">Применить</button>
+                <label for="goals-max-filter">Макс. голов:</label>
+                <input type="number" id="goals-max-filter">
+
+                <label for="assists-min-filter">Мин. ассистов:</label>
+                <input type="number" id="assists-min-filter">
+
+                <label for="assists-max-filter">Макс. ассистов:</label>
+                <input type="number" id="assists-max-filter">
+
+                <label for="yellow-cards-min-filter">Мин. ж. карточек:</label>
+                <input type="number" id="yellow-cards-min-filter">
+
+                <label for="yellow-cards-max-filter">Макс. ж. карточек:</label>
+                <input type="number" id="yellow-cards-max-filter">
+
+                <label for="red-cards-min-filter">Мин. к. карточек:</label>
+                <input type="number" id="red-cards-min-filter">
+
+                <label for="red-cards-max-filter">Макс. к. карточек:</label>
+                <input type="number" id="red-cards-max-filter">
+
+                <label for="matches-min-filter">Мин. матчей:</label>
+                <input type="number" id="matches-min-filter">
+
+                <label for="matches-max-filter">Макс. матчей:</label>
+                <input type="number" id="matches-max-filter">
+
+                <label for="minutes-min-filter">Мин. минут:</label>
+                <input type="number" id="minutes-min-filter">
+
+                <label for="minutes-max-filter">Макс. минут:</label>
+                <input type="number" id="minutes-max-filter">
+
+                <label for="average-rating-min-filter">Мин. рейтинг:</label>
+                <input type="number" id="average-rating-min-filter">
+
+                <label for="average-rating-max-filter">Макс. рейтинг:</label>
+                <input type="number" id="average-rating-max-filter">
+            </div>
+
+            <div class="filter-button">
+                <button id="apply-filter-button">Применить</button>
+            </div>
 
         </div>
     </div>
@@ -55,7 +100,7 @@
         </tbody>
     </table>
 
-    <script src="JS\generateTable.js"></script>
-    <script src="JS\filter.js"></script>
+    <script src="JS/generateTable.js"></script>
+    <script src="JS/filter.js"></script>
 </body>
 </html>
