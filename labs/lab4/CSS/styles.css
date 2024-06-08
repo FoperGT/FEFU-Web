@@ -1,0 +1,16 @@
+.menu {
+    text-align: center;
+}
+
+.player {
+    position: relative;
+    height: 100vh; 
+}
+
+svg {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid black;
+}

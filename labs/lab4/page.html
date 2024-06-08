@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Анимация с D3.js</title>
+    <link rel="stylesheet" href="CSS/styles.css">
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+</head>
+<body>
+    <div class="menu">
+        <form id="animationForm">
+            <label for="duration">Время анимации (мс):</label>
+            <input type="number" id="duration" name="duration" value="2000"><br><br>
+
+            <label for="scaleEffect">Масштабирование (от 0.5 до 2):</label>
+            <input type="number" id="scaleEffect" name="scaleEffect" value="1" step="0.1" min="0.5" max="2"><br><br>
+
+            <label for="rotationEffect">Вращение (градусы):</label>
+            <input type="number" id="rotationEffect" name="rotationEffect" value="0" step="15" min="0" max="360"><br><br>
+
+            <button type="button" onclick="startAnimation()">Запустить анимацию</button>
+            <button type="button" onclick="clearSvg()">Очистить</button>
+        </form>
+    </div>
+
+    <div class="player">
+        <svg width="820" height="600"></svg>
+    </div>
+
+    <script src="JS/script.js"></script>
+</body>
+</html>
