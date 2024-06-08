@@ -8,97 +8,99 @@
 </head>
 <body>
 
-    <h1>Статистика игроков Премьер-лиги</h1>
+    <div class="content-wrapper">
+        <h1>Статистика игроков Премьер-лиги</h1>
 
-    <button id="filter-button">Фильтр</button>
+        <button id="filter-button">Фильтр</button>
 
-    <div id="filter-modal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Фильтры</h2>
+        <div id="filter-modal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Фильтры</h2>
 
-            <div class="form-grid">
-                <label for="name-filter">Имя:</label>
-                <input type="text" id="name-filter">
+                <div class="form-grid">
+                    <label for="name-filter">Имя:</label>
+                    <input type="text" id="name-filter">
 
-                <label for="club-filter">Клуб:</label>
-                <select id="club-filter">
-                    <option value="">Выберите клуб</option>
-                </select>
+                    <label for="club-filter">Клуб:</label>
+                    <select id="club-filter">
+                        <option value="">Выберите клуб</option>
+                    </select>
 
-                <label for="position-filter">Позиция:</label>
-                <select id="position-filter">
-                    <option value="">Выберите позицию</option>
-                </select>
+                    <label for="position-filter">Позиция:</label>
+                    <select id="position-filter">
+                        <option value="">Выберите позицию</option>
+                    </select>
 
-                <label for="goals-min-filter">Мин. голов:</label>
-                <input type="number" id="goals-min-filter">
+                    <label for="goals-min-filter">Мин. голов:</label>
+                    <input type="number" id="goals-min-filter">
 
-                <label for="goals-max-filter">Макс. голов:</label>
-                <input type="number" id="goals-max-filter">
+                    <label for="goals-max-filter">Макс. голов:</label>
+                    <input type="number" id="goals-max-filter">
 
-                <label for="assists-min-filter">Мин. ассистов:</label>
-                <input type="number" id="assists-min-filter">
+                    <label for="assists-min-filter">Мин. ассистов:</label>
+                    <input type="number" id="assists-min-filter">
 
-                <label for="assists-max-filter">Макс. ассистов:</label>
-                <input type="number" id="assists-max-filter">
+                    <label for="assists-max-filter">Макс. ассистов:</label>
+                    <input type="number" id="assists-max-filter">
 
-                <label for="yellow-cards-min-filter">Мин. ж. карточек:</label>
-                <input type="number" id="yellow-cards-min-filter">
+                    <label for="yellow-cards-min-filter">Мин. ж. карточек:</label>
+                    <input type="number" id="yellow-cards-min-filter">
 
-                <label for="yellow-cards-max-filter">Макс. ж. карточек:</label>
-                <input type="number" id="yellow-cards-max-filter">
+                    <label for="yellow-cards-max-filter">Макс. ж. карточек:</label>
+                    <input type="number" id="yellow-cards-max-filter">
 
-                <label for="red-cards-min-filter">Мин. к. карточек:</label>
-                <input type="number" id="red-cards-min-filter">
+                    <label for="red-cards-min-filter">Мин. к. карточек:</label>
+                    <input type="number" id="red-cards-min-filter">
 
-                <label for="red-cards-max-filter">Макс. к. карточек:</label>
-                <input type="number" id="red-cards-max-filter">
+                    <label for="red-cards-max-filter">Макс. к. карточек:</label>
+                    <input type="number" id="red-cards-max-filter">
 
-                <label for="matches-min-filter">Мин. матчей:</label>
-                <input type="number" id="matches-min-filter">
+                    <label for="matches-min-filter">Мин. матчей:</label>
+                    <input type="number" id="matches-min-filter">
 
-                <label for="matches-max-filter">Макс. матчей:</label>
-                <input type="number" id="matches-max-filter">
+                    <label for="matches-max-filter">Макс. матчей:</label>
+                    <input type="number" id="matches-max-filter">
 
-                <label for="minutes-min-filter">Мин. минут:</label>
-                <input type="number" id="minutes-min-filter">
+                    <label for="minutes-min-filter">Мин. минут:</label>
+                    <input type="number" id="minutes-min-filter">
 
-                <label for="minutes-max-filter">Макс. минут:</label>
-                <input type="number" id="minutes-max-filter">
+                    <label for="minutes-max-filter">Макс. минут:</label>
+                    <input type="number" id="minutes-max-filter">
 
-                <label for="average-rating-min-filter">Мин. рейтинг:</label>
-                <input type="number" id="average-rating-min-filter">
+                    <label for="average-rating-min-filter">Мин. рейтинг:</label>
+                    <input type="number" id="average-rating-min-filter">
 
-                <label for="average-rating-max-filter">Макс. рейтинг:</label>
-                <input type="number" id="average-rating-max-filter">
+                    <label for="average-rating-max-filter">Макс. рейтинг:</label>
+                    <input type="number" id="average-rating-max-filter">
+                </div>
+
+                <div class="filter-button">
+                    <button id="apply-filter-button">Применить</button>
+                </div>
+
             </div>
-
-            <div class="filter-button">
-                <button id="apply-filter-button">Применить</button>
-            </div>
-
         </div>
-    </div>
 
-    <table id="players-table">
-        <thead>
-            <tr>
-                <th data-type="string">Имя <button class="sort-button" data-index="0">&#8645;</button></th>
-                <th data-type="string">Клуб <button class="sort-button" data-index="1">&#8645;</button></th>
-                <th data-type="string">Позиция <button class="sort-button" data-index="2">&#8645;</button></th>
-                <th data-type="number">Голы <button class="sort-button" data-index="3">&#8645;</button></th>
-                <th data-type="number">Ассисты <button class="sort-button" data-index="4">&#8645;</button></th>
-                <th data-type="number">Желтые карточки <button class="sort-button" data-index="5">&#8645;</button></th>
-                <th data-type="number">Красные карточки <button class="sort-button" data-index="6">&#8645;</button></th>
-                <th data-type="number">Матчи <button class="sort-button" data-index="7">&#8645;</button></th>
-                <th data-type="number">Минуты <button class="sort-button" data-index="8">&#8645;</button></th>
-                <th data-type="number">Средний рейтинг <button class="sort-button" data-index="9">&#8645;</button></th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
+        <table id="players-table">
+            <thead>
+                <tr>
+                    <th data-type="string">Имя <button class="sort-button" data-index="0">&#8645;</button></th>
+                    <th data-type="string">Клуб <button class="sort-button" data-index="1">&#8645;</button></th>
+                    <th data-type="string">Позиция <button class="sort-button" data-index="2">&#8645;</button></th>
+                    <th data-type="number">Голы <button class="sort-button" data-index="3">&#8645;</button></th>
+                    <th data-type="number">Ассисты <button class="sort-button" data-index="4">&#8645;</button></th>
+                    <th data-type="number">Желтые карточки <button class="sort-button" data-index="5">&#8645;</button></th>
+                    <th data-type="number">Красные карточки <button class="sort-button" data-index="6">&#8645;</button></th>
+                    <th data-type="number">Матчи <button class="sort-button" data-index="7">&#8645;</button></th>
+                    <th data-type="number">Минуты <button class="sort-button" data-index="8">&#8645;</button></th>
+                    <th data-type="number">Средний рейтинг <button class="sort-button" data-index="9">&#8645;</button></th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
 
     <script src="JS/generateTable.js"></script>
     <script src="JS/filter.js"></script>
