@@ -1,27 +1,33 @@
 const svg = d3.select("svg");
+const width = +svg.attr("width");
+const height = +svg.attr("height");
 
-const pathData = `
-    M10,80 
-    Q50,10 90,80
-    T170,80
-    T250,80
-    T330,80
-    T410,80
-    T490,80
-    T570,80
-    T650,80
-    T730,80
-    T810,80`;
+let points = [];
+for (let x = 0; x <= width; x += 1) {
+    let y = 200 + 100 * Math.sin(x * Math.PI / 40);
+    points.push({ x: x, y: y });
+}
+
+function createPathData(points) {
+    let pathData = `M${points[0].x},${points[0].y}`;
+    for (let i = 1; i < points.length; i++) {
+        pathData += ` L${points[i].x},${points[i].y}`;
+    }
+    return pathData;
+}
+
+const pathData = createPathData(points);
 
 svg.append("path")
     .attr("d", pathData)
     .attr("stroke", "blue")
-    .attr("stroke-width", 2)
+    .attr("stroke-width", 3)
     .attr("fill", "none");
 
 const circle = svg.append("circle")
     .attr("r", 10)
-    .attr("fill", "red");
+    .attr("fill", "red")
+    .style("display", "none");  
 
 function startAnimation() {
     const duration = +document.getElementById("duration").value;
@@ -31,27 +37,26 @@ function startAnimation() {
     const path = svg.select("path");
     const totalLength = path.node().getTotalLength();
 
-    circle.transition()
+    circle
+        .style("display", null)
+        .transition()
         .duration(duration)
-        .attrTween("transform", translateAlong(path.node(), totalLength))
-        .on("end", () => applyEffects(scaleEffect, rotationEffect));
+        .attrTween("transform", translateAlong(path.node()))
+        .on("end", () => {
+        });
 }
 
-function translateAlong(path, totalLength) {
-    return function(d, i, a) {
+function translateAlong(path) {
+    const totalLength = path.getTotalLength();
+    return function() {
         return function(t) {
-            const point = path.getPointAtLength((1 - t) * totalLength);
+            const point = path.getPointAtLength((1 - t) * totalLength); 
             return `translate(${point.x},${point.y})`;
         };
     };
 }
 
-function applyEffects(scale, rotate) {
-    circle.transition()
-        .duration(1000)
-        .attr("transform", `scale(${scale}) rotate(${rotate})`);
-}
-
 function clearSvg() {
-    circle.attr("transform", "");
+    circle.attr("transform", "")
+        .style("display", "none");  
 }
