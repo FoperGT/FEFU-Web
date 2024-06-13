@@ -26,7 +26,8 @@ svg.append("path")
 
 const circle = svg.append("circle")
     .attr("r", 10)
-    .attr("fill", "red")
+    .attr("fill", "black")
+    .attr("mask", "url(#circleMask)")  
     .style("display", "none");  
 
 function startAnimation() {

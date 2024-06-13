@@ -24,7 +24,19 @@
     </div>
 
     <div class="player">
-        <svg width="820" height="420"></svg>
+        <svg width="820" height="420">
+            <defs>
+                <pattern id="checkerboard" width="20" height="20">
+                    <rect width="10" height="10" fill="black"></rect>
+                    <rect x="10" width="10" height="10" fill="white"></rect>
+                    <rect y="10" width="10" height="10" fill="white"></rect>
+                    <rect x="10" y="10" width="10" height="10" fill="black"></rect>
+                </pattern>
+                <mask id="circleMask">
+                    <circle cx="0" cy="0" r="10" fill="url(#checkerboard)"></circle>
+                </mask>
+            </defs>
+        </svg>
     </div>
 
     <script src="JS/script.js"></script>
