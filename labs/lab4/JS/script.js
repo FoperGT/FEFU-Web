@@ -27,16 +27,24 @@ svg.append("path")
 const circle = svg.append("circle")
     .attr("r", 10)
     .attr("fill", "black")
-    .attr("mask", "url(#circleMask)")  
-    .style("display", "none");  
+    .attr("mask", "url(#circleMask)")
+    .style("display", "none");
 
 function startAnimation() {
     const duration = +document.getElementById("duration").value;
-    const scaleEffect = +document.getElementById("scaleEffect").value;
-    const rotationEffect = +document.getElementById("rotationEffect").value;
-
     const path = svg.select("path");
     const totalLength = path.node().getTotalLength();
+
+    svg.selectAll(".moving-point").remove();
+
+    svg.selectAll(".moving-point")
+        .data(points)
+        .enter().append("circle")
+        .attr("class", "moving-point")
+        .attr("r", 5)
+        .attr("cx", d => d.x)
+        .attr("cy", d => d.y)
+        .attr("fill", "red");
 
     circle
         .style("display", null)
@@ -51,7 +59,7 @@ function translateAlong(path) {
     const totalLength = path.getTotalLength();
     return function() {
         return function(t) {
-            const point = path.getPointAtLength((1 - t) * totalLength); 
+            const point = path.getPointAtLength((1 - t) * totalLength);
             return `translate(${point.x},${point.y})`;
         };
     };
@@ -59,5 +67,5 @@ function translateAlong(path) {
 
 function clearSvg() {
     circle.attr("transform", "")
-        .style("display", "none");  
+        .style("display", "none");
 }

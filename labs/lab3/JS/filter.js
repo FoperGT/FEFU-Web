@@ -174,7 +174,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (clubFilter && !player.club.toLowerCase().includes(clubFilter)) {
                 return false;
             }
-            if (positionFilter && !player.position.toLowerCase().includes(positionFilter)) {
+            if (positionFilter && player.position.toLowerCase() !== positionFilter) {
                 return false;
             }
             if (goalsMinFilter && player.goals < parseInt(goalsMinFilter, 10)) {

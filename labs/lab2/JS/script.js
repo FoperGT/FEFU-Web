@@ -12,12 +12,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div>
                     <label>Первое число (модуль и аргумент):</label>
                     <input type="number" step="any" name="mod1" placeholder="Модуль" required>
-                    <input type="number" step="any" name="arg1" placeholder="Аргумент (в радианах)" required>
+                    <input type="number" step="any" name="arg1" placeholder="Аргумент" required>
                 </div>
                 <div>
                     <label>Второе число (модуль и аргумент):</label>
                     <input type="number" step="any" name="mod2" placeholder="Модуль" required>
-                    <input type="number" step="any" name="arg2" placeholder="Аргумент (в радианах)" required>
+                    <input type="number" step="any" name="arg2" placeholder="Аргумент" required>
                 </div>`;
         } else {
             fieldsHTML = `
@@ -106,51 +106,45 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     function addComplex(mod1, arg1, mod2, arg2) {
-        const x1 = mod1 * Math.cos(arg1);
-        const y1 = mod1 * Math.sin(arg1);
-        const x2 = mod2 * Math.cos(arg2);
-        const y2 = mod2 * Math.sin(arg2);
-
-        const x = x1 + x2;
-        const y = y1 + y2;
-
-        const mod = Math.sqrt(x * x + y * y);
-        const arg = Math.atan2(y, x);
+        const mod = mod1 + mod2;
+        const arg = arg1 + arg2;
+          
         return { mod, arg };
     }
 
     function subtractComplex(mod1, arg1, mod2, arg2) {
-        const x1 = mod1 * Math.cos(arg1);
-        const y1 = mod1 * Math.sin(arg1);
-        const x2 = mod2 * Math.cos(arg2);
-        const y2 = mod2 * Math.sin(arg2);
-    
-        const x = x1 - x2;
-        const y = y1 - y2;
-
-        const mod = Math.sqrt(x * x + y * y);
-        const arg = Math.atan2(y, x);
+        const mod = mod1 - mod2;
+        const arg = arg1 + arg2;
+          
         return { mod, arg };
     }
+    
 
     function multiplyComplex(mod1, arg1, mod2, arg2) {
-        const mod = mod1 * mod2;
-        const arg = arg1 + arg2;
+        const mod = mod1 * mod2 + ((arg1 * arg2) * (-1));
+        const arg = mod1 * arg2 + arg1 * mod2;
+
         return { mod, arg };
     }
 
     function divideComplex(mod1, arg1, mod2, arg2) {
-        const mod = mod1 / mod2;
-        const arg = arg1 - arg2;
+        let denominator = mod2 * mod2 + arg2 * arg2;
+
+        let modIntermediate = mod1 * mod2 + arg1 * arg2;
+        let argIntermediate = arg1 * mod2 - mod1 * arg2;
+
+        let mod = modIntermediate / denominator;
+        let arg = argIntermediate / denominator;
+
         return { mod, arg };
     }
 
     function formatResult(result) {
         const formType = form.elements['form'].value;
         if (formType === 'exponential') {
-            return `Модуль: ${result.mod.toFixed(2)}, Аргумент: ${result.arg.toFixed(2)} рад`;
+            return `${result.mod.toFixed(2)} + ${result.arg.toFixed(2)}i`;
         } else {
-            return `Модуль: ${result.mod.toFixed(2)}, Угол: ${result.arg.toFixed(2)} рад`;
+            return `${result.mod.toFixed(2)} + ${result.arg.toFixed(2)}i`;
         }
     }
 
