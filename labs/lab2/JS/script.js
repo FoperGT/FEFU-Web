@@ -205,10 +205,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function multiplyTrigonometricComplex(mod1, arg1angleA, arg1angleB, mod2, arg2angleA, arg2angleB) {
         const parenthesis1Part1 = mod1 * Math.cos(degreesToRadians(arg1angleA));
-        const parenthesis1Part2 = mod1 * Math.sin(degreesToRadians(arg1angleB)); // тут i
+        const parenthesis1Part2 = mod1 * Math.sin(degreesToRadians(arg1angleB)); 
 
         const parenthesis2Part1 = mod2 * Math.cos(degreesToRadians(arg2angleA));
-        const parenthesis2Part2 = mod2 * Math.sin(degreesToRadians(arg2angleB)); // тут i
+        const parenthesis2Part2 = mod2 * Math.sin(degreesToRadians(arg2angleB)); 
 
         const modArgument1 = parenthesis1Part1 * parenthesis2Part1;
         const modArgument2 = parenthesis1Part2 * parenthesis2Part2 * (-1);
@@ -223,11 +223,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function divideTrigonometricComplex(mod1, arg1angleA, arg1angleB, mod2, arg2angleA, arg2angleB) {
-        const parenthesis1Part1 = mod1 * Math.cos(degreesToRadians(arg1angleA)); // -2 
-        const parenthesis1Part2 = mod1 * Math.sin(degreesToRadians(arg1angleB)); //2i
+        const parenthesis1Part1 = mod1 * Math.cos(degreesToRadians(arg1angleA)); 
+        const parenthesis1Part2 = mod1 * Math.sin(degreesToRadians(arg1angleB)); 
 
-        const parenthesis2Part1 = mod2 * Math.cos(degreesToRadians(arg2angleA)); // -4
-        const parenthesis2Part2 = mod2 * Math.sin(degreesToRadians(arg2angleB)); // 4i
+        const parenthesis2Part1 = mod2 * Math.cos(degreesToRadians(arg2angleA)); 
+        const parenthesis2Part2 = mod2 * Math.sin(degreesToRadians(arg2angleB)); 
 
         const modNumerator1 = parenthesis1Part1 * parenthesis2Part1;
         const modNumerator2 = parenthesis1Part2 * parenthesis2Part2; 
