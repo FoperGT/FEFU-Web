@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const inputFields = document.getElementById('input-fields');
     const results = document.getElementById('results');
 
+    let currentFields = [];
+
     function showInputFields() {
         const formType = form.elements['form'].value;
         let fieldsHTML = '';
@@ -23,6 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         <input type="number" step="any" name="arg2" placeholder="Аргумент" required>
                     </div>
                 </div>`;
+            currentFields = ['mod1', 'arg1', 'mod2', 'arg2'];
         } else if (formType === 'trigonometric') {
             fieldsHTML = `
                 <div class="form-group">
@@ -37,10 +40,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     <label>Второе число:</label>
                     <div class="input-fields">
                         <input type="number" step="any" name="mod2" placeholder="Модуль" required>
-                        <input type="number" step="any" name="arg2angleA" placeholder="Угол" required>
-                        <input type="number" step="any" name="arg2angleB" placeholder="Угол" required>
+                        <input type="number" step="any" name="arg2angleA" placeholder="Угол(в градусах)" required>
+                        <input type="number" step="any" name="arg2angleB" placeholder="Угол(в градусах)" required>
                     </div>
                 </div>`;
+            currentFields = ['mod1', 'arg1angleA', 'arg1angleB', 'mod2', 'arg2angleA', 'arg2angleB'];
         }
 
         inputFields.innerHTML = fieldsHTML;
@@ -53,30 +57,18 @@ document.addEventListener('DOMContentLoaded', function() {
         results.innerHTML = '';
 
         const formData = new FormData(form);
-        const mod1 = parseFloat(formData.get('mod1'));
-        const mod2 = parseFloat(formData.get('mod2'));
-        const arg1 = parseFloat(formData.get('arg1') || formData.get('arg1angleA') || formData.get('arg1angleB'));
-        const arg2 = parseFloat(formData.get('arg2') || formData.get('arg2angleA') || formData.get('arg2angleB'));
 
         clearErrors();
 
         let valid = true;
-        if (isNaN(mod1)) {
-            markError(form.elements['mod1']);
-            valid = false;
-        }
-        if (isNaN(mod2)) {
-            markError(form.elements['mod2']);
-            valid = false;
-        }
-        if (isNaN(arg1)) {
-            markError(form.elements['arg1'] || form.elements['arg1angleA'] || form.elements['arg1angleB']);
-            valid = false;
-        }
-        if (isNaN(arg2)) {
-            markError(form.elements['arg2'] || form.elements['arg2angleA'] || form.elements['arg2angleB']);
-            valid = false;
-        }
+        currentFields.forEach(fieldName => {
+            const field = form.elements[fieldName];
+            const value = parseFloat(formData.get(fieldName));
+            if (isNaN(value)) {
+                markError(field);
+                valid = false;
+            }
+        });
 
         if (!valid) {
             results.innerHTML = '<div id="error">Пожалуйста, введите корректные значения.</div>';
@@ -89,6 +81,11 @@ document.addEventListener('DOMContentLoaded', function() {
         operations.forEach(op => {
             let result;
             if (formType === 'exponential') {
+                const mod1 = parseFloat(formData.get('mod1'));
+                const arg1 = parseFloat(formData.get('arg1'));
+                const mod2 = parseFloat(formData.get('mod2'));
+                const arg2 = parseFloat(formData.get('arg2'));
+
                 switch (op) {
                     case 'add':
                         result = addExponentialComplex(mod1, arg1, mod2, arg2);
@@ -110,21 +107,28 @@ document.addEventListener('DOMContentLoaded', function() {
                         break;
                 }
             } else if (formType === 'trigonometric') {
+                const mod1 = parseFloat(formData.get('mod1'));
+                const arg1angleA = parseFloat(formData.get('arg1angleA'));
+                const arg1angleB = parseFloat(formData.get('arg1angleB'));
+                const mod2 = parseFloat(formData.get('mod2'));
+                const arg2angleA = parseFloat(formData.get('arg2angleA'));
+                const arg2angleB = parseFloat(formData.get('arg2angleB'));
+
                 switch (op) {
                     case 'add':
-                        result = addTrigonometricComplex(mod1, arg1, mod2, arg2);
+                        result = addTrigonometricComplex(mod1, arg1angleA, arg1angleB, mod2, arg2angleA, arg2angleB);
                         results.innerHTML += `<div class="result-item">Сумма: ${formatResult(result)}</div>`;
                         break;
                     case 'subtract':
-                        result = subtractTrigonometricComplex(mod1, arg1, mod2, arg2);
+                        result = subtractTrigonometricComplex(mod1, arg1angleA, arg1angleB, mod2, arg2angleA, arg2angleB);
                         results.innerHTML += `<div class="result-item">Разность: ${formatResult(result)}</div>`;
                         break;
                     case 'multiply':
-                        result = multiplyTrigonometricComplex(mod1, arg1, mod2, arg2);
+                        result = multiplyTrigonometricComplex(mod1, arg1angleA, arg1angleB, mod2, arg2angleA, arg2angleB);
                         results.innerHTML += `<div class="result-item">Произведение: ${formatResult(result)}</div>`;
                         break;
                     case 'divide':
-                        result = divideTrigonometricComplex(mod1, arg1, mod2, arg2);
+                        result = divideTrigonometricComplex(mod1, arg1angleA, arg1angleB, mod2, arg2angleA, arg2angleB);
                         results.innerHTML += `<div class="result-item">Частное: ${formatResult(result)}</div>`;
                         break;
                     default:
@@ -143,50 +147,102 @@ document.addEventListener('DOMContentLoaded', function() {
     function addExponentialComplex(mod1, arg1, mod2, arg2) {
         const mod = mod1 + mod2;
         const arg = arg1 + arg2;
+
         return { mod, arg };
     }
 
     function subtractExponentialComplex(mod1, arg1, mod2, arg2) {
         const mod = mod1 - mod2;
         const arg = arg1 - arg2;
+
         return { mod, arg };
     }
 
     function multiplyExponentialComplex(mod1, arg1, mod2, arg2) {
         const mod = mod1 * mod2 + ((arg1 * arg2) * (-1));
         const arg = mod1 * arg2 + arg1 * mod2;
+
         return { mod, arg };
     }
 
     function divideExponentialComplex(mod1, arg1, mod2, arg2) {
-        let denominator = mod2 * mod2 + arg2 * arg2;
-        let modIntermediate = mod1 * mod2 + arg1 * arg2;
-        let argIntermediate = arg1 * mod2 - mod1 * arg2;
-        let mod = modIntermediate / denominator;
-        let arg = argIntermediate / denominator;
+        const denominator = mod2 * mod2 + arg2 * arg2;
+
+        const modIntermediate = mod1 * mod2 + arg1 * arg2;
+        const argIntermediate = arg1 * mod2 - mod1 * arg2;
+
+        const mod = modIntermediate / denominator;
+        const arg = argIntermediate / denominator;
+
         return { mod, arg };
     }
 
-    function addTrigonometricComplex(mod1, arg1, mod2, arg2) {
-        
-    
+    function addTrigonometricComplex(mod1, arg1angleA, arg1angleB, mod2, arg2angleA, arg2angleB) {
+        const modIntermediate1 = mod1 * (Math.cos(degreesToRadians(arg1angleA)));
+        const argIntermediate1 = mod1 * (Math.sin(degreesToRadians(arg1angleB)));
+
+        const modIntermediate2 = mod2 * (Math.cos(degreesToRadians(arg2angleA)));
+        const argIntermediate2 = mod2 * (Math.sin(degreesToRadians(arg2angleB)));
+
+        const mod = modIntermediate1 + modIntermediate2;
+        const arg = argIntermediate1 + argIntermediate2;
+
         return { mod, arg };
     }
-    
-    function subtractTrigonometricComplex(mod1, arg1, mod2, arg2) {
 
-    
+    function subtractTrigonometricComplex(mod1, arg1angleA, arg1angleB, mod2, arg2angleA, arg2angleB) {
+        const modIntermediate1 = mod1 * (Math.cos(degreesToRadians(arg1angleA)));
+        const argIntermediate1 = mod1 * (Math.sin(degreesToRadians(arg1angleB)));
+
+        const modIntermediate2 = mod2 * (Math.cos(degreesToRadians(arg2angleA)));
+        const argIntermediate2 = mod2 * (Math.sin(degreesToRadians(arg2angleB)));
+
+        const mod = modIntermediate1 - modIntermediate2;
+        const arg = argIntermediate1 - argIntermediate2;
+
         return { mod, arg };
     }
-    
-    function multiplyTrigonometricComplex(mod1, arg1, mod2, arh2) {
 
-    
+    function multiplyTrigonometricComplex(mod1, arg1angleA, arg1angleB, mod2, arg2angleA, arg2angleB) {
+        const parenthesis1Part1 = mod1 * Math.cos(degreesToRadians(arg1angleA));
+        const parenthesis1Part2 = mod1 * Math.sin(degreesToRadians(arg1angleB)); // тут i
+
+        const parenthesis2Part1 = mod2 * Math.cos(degreesToRadians(arg2angleA));
+        const parenthesis2Part2 = mod2 * Math.sin(degreesToRadians(arg2angleB)); // тут i
+
+        const modArgument1 = parenthesis1Part1 * parenthesis2Part1;
+        const modArgument2 = parenthesis1Part2 * parenthesis2Part2 * (-1);
+
+        const argArgument1 = parenthesis1Part1 * parenthesis2Part2;
+        const argArgument2 = parenthesis1Part2 * parenthesis2Part1;
+
+        const mod = modArgument1 + modArgument2;
+        const arg = argArgument1 + argArgument2;
+
         return { mod, arg };
     }
-    
-    function divideTrigonometricComplex(mod1, arg1, mod2, arg2) {
 
+    function divideTrigonometricComplex(mod1, arg1angleA, arg1angleB, mod2, arg2angleA, arg2angleB) {
+        const parenthesis1Part1 = mod1 * Math.cos(degreesToRadians(arg1angleA)); // -2 
+        const parenthesis1Part2 = mod1 * Math.sin(degreesToRadians(arg1angleB)); //2i
+
+        const parenthesis2Part1 = mod2 * Math.cos(degreesToRadians(arg2angleA)); // -4
+        const parenthesis2Part2 = mod2 * Math.sin(degreesToRadians(arg2angleB)); // 4i
+
+        const modNumerator1 = parenthesis1Part1 * parenthesis2Part1;
+        const modNumerator2 = parenthesis1Part2 * parenthesis2Part2; 
+        const argNumerator1 = parenthesis1Part1 * parenthesis2Part2; 
+        const argNumerator2 = parenthesis1Part2 * parenthesis2Part1 * (-1);
+
+        const modDenominator1 = parenthesis2Part1 * parenthesis2Part1; 
+        const modDenominator2 = parenthesis2Part1 * parenthesis2Part2 * (-1); 
+        const argDenominator1 = parenthesis2Part2 * parenthesis2Part1; 
+        const argDenominator2 = parenthesis2Part2 * parenthesis2Part2;
+
+        const denominator = modDenominator1 + modDenominator2 + argDenominator1 + argDenominator2;
+
+        const mod = (modNumerator1 + modNumerator2) / denominator;
+        const arg = (argNumerator1 + argNumerator2) / denominator;
 
         return { mod, arg };
     }
@@ -211,5 +267,9 @@ document.addEventListener('DOMContentLoaded', function() {
         inputs.forEach(input => {
             input.classList.remove('error');
         });
+    }
+
+    function degreesToRadians(degrees) {
+        return degrees * Math.PI / 180;
     }
 });
