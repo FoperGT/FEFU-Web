@@ -242,19 +242,27 @@ document.addEventListener('DOMContentLoaded', function() {
         const denominator = modDenominator1 + modDenominator2 + argDenominator1 + argDenominator2;
 
         const mod = (modNumerator1 + modNumerator2) / denominator;
-        const arg = (argNumerator1 + argNumerator2) / denominator;
+        const arg = (argNumerator1 + argNumerator2) / denominator * (-1);
 
         return { mod, arg };
     }
 
     function formatResult(result) {
         const formType = form.elements['form'].value;
-        if (formType === 'exponential') {
-            return `${result.mod.toFixed(2)} + ${result.arg.toFixed(2)}i`;
-        } else if (formType === 'trigonometric') {
-            return `${result.mod.toFixed(2)} + ${result.arg.toFixed(2)}i`;
+        let formattedArg;
+    
+        if (result.arg < 0) {
+            formattedArg = `- ${(Math.abs(result.arg.toFixed(2)))}i`; 
+        } else {
+            formattedArg = `+ ${result.arg.toFixed(2)}i`; 
         }
-    }
+    
+        if (formType === 'exponential') {
+            return `${result.mod.toFixed(2)} ${formattedArg}`;
+        } else if (formType === 'trigonometric') {
+            return `${result.mod.toFixed(2)} ${formattedArg}`;
+        }
+    }    
 
     function markError(input) {
         if (input) {
