@@ -9,27 +9,37 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (formType === 'exponential') {
             fieldsHTML = `
-                <div>
-                    <label>Первое число (модуль и аргумент):</label>
-                    <input type="number" step="any" name="mod1" placeholder="Модуль" required>
-                    <input type="number" step="any" name="arg1" placeholder="Аргумент" required>
+                <div class="form-group">
+                    <label>Первое число:</label>
+                    <div class="input-fields">
+                        <input type="number" step="any" name="mod1" placeholder="Модуль" required>
+                        <input type="number" step="any" name="arg1" placeholder="Аргумент" required>
+                    </div>
                 </div>
-                <div>
-                    <label>Второе число (модуль и аргумент):</label>
-                    <input type="number" step="any" name="mod2" placeholder="Модуль" required>
-                    <input type="number" step="any" name="arg2" placeholder="Аргумент" required>
+                <div class="form-group">
+                    <label>Второе число:</label>
+                    <div class="input-fields">
+                        <input type="number" step="any" name="mod2" placeholder="Модуль" required>
+                        <input type="number" step="any" name="arg2" placeholder="Аргумент" required>
+                    </div>
                 </div>`;
-        } else {
+        } else if (formType === 'trigonometric') {
             fieldsHTML = `
-                <div>
-                    <label>Первое число (модуль и угол):</label>
-                    <input type="number" step="any" name="mod1" placeholder="Модуль" required>
-                    <input type="number" step="any" name="angle1" placeholder="Угол (в радианах)" required>
+                <div class="form-group">
+                    <label>Первое число:</label>
+                    <div class="input-fields">
+                        <input type="number" step="any" name="mod1" placeholder="Модуль" required>
+                        <input type="number" step="any" name="arg1angleA" placeholder="Угол" required>
+                        <input type="number" step="any" name="arg1angleB" placeholder="Угол" required>
+                    </div>
                 </div>
-                <div>
-                    <label>Второе число (модуль и угол):</label>
-                    <input type="number" step="any" name="mod2" placeholder="Модуль" required>
-                    <input type="number" step="any" name="angle2" placeholder="Угол (в радианах)" required>
+                <div class="form-group">
+                    <label>Второе число:</label>
+                    <div class="input-fields">
+                        <input type="number" step="any" name="mod2" placeholder="Модуль" required>
+                        <input type="number" step="any" name="arg2angleA" placeholder="Угол" required>
+                        <input type="number" step="any" name="arg2angleB" placeholder="Угол" required>
+                    </div>
                 </div>`;
         }
 
@@ -37,16 +47,16 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     document.getElementById('show-form').addEventListener('click', showInputFields);
-    showInputFields();  
+    showInputFields();
 
     document.getElementById('calculate').addEventListener('click', function() {
-        results.innerHTML = '';  
+        results.innerHTML = '';
 
         const formData = new FormData(form);
         const mod1 = parseFloat(formData.get('mod1'));
         const mod2 = parseFloat(formData.get('mod2'));
-        const arg1 = parseFloat(formData.get('arg1') || formData.get('angle1'));
-        const arg2 = parseFloat(formData.get('arg2') || formData.get('angle2'));
+        const arg1 = parseFloat(formData.get('arg1') || formData.get('arg1angleA') || formData.get('arg1angleB'));
+        const arg2 = parseFloat(formData.get('arg2') || formData.get('arg2angleA') || formData.get('arg2angleB'));
 
         clearErrors();
 
@@ -60,11 +70,11 @@ document.addEventListener('DOMContentLoaded', function() {
             valid = false;
         }
         if (isNaN(arg1)) {
-            markError(form.elements['arg1'] || form.elements['angle1']);
+            markError(form.elements['arg1'] || form.elements['arg1angleA'] || form.elements['arg1angleB']);
             valid = false;
         }
         if (isNaN(arg2)) {
-            markError(form.elements['arg2'] || form.elements['angle2']);
+            markError(form.elements['arg2'] || form.elements['arg2angleA'] || form.elements['arg2angleB']);
             valid = false;
         }
 
@@ -74,27 +84,52 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         const operations = formData.getAll('operation');
+        const formType = form.elements['form'].value;
+
         operations.forEach(op => {
             let result;
-            switch (op) {
-                case 'add':
-                    result = addComplex(mod1, arg1, mod2, arg2);
-                    results.innerHTML += `<div class="result-item">Сумма: ${formatResult(result)}</div>`;
-                    break;
-                case 'subtract':
-                    result = subtractComplex(mod1, arg1, mod2, arg2);
-                    results.innerHTML += `<div class="result-item">Разность: ${formatResult(result)}</div>`;
-                    break;
-                case 'multiply':
-                    result = multiplyComplex(mod1, arg1, mod2, arg2);
-                    results.innerHTML += `<div class="result-item">Произведение: ${formatResult(result)}</div>`;
-                    break;
-                case 'divide':
-                    result = divideComplex(mod1, arg1, mod2, arg2);
-                    results.innerHTML += `<div class="result-item">Частное: ${formatResult(result)}</div>`;
-                    break;
-                default:
-                    break;
+            if (formType === 'exponential') {
+                switch (op) {
+                    case 'add':
+                        result = addExponentialComplex(mod1, arg1, mod2, arg2);
+                        results.innerHTML += `<div class="result-item">Сумма: ${formatResult(result)}</div>`;
+                        break;
+                    case 'subtract':
+                        result = subtractExponentialComplex(mod1, arg1, mod2, arg2);
+                        results.innerHTML += `<div class="result-item">Разность: ${formatResult(result)}</div>`;
+                        break;
+                    case 'multiply':
+                        result = multiplyExponentialComplex(mod1, arg1, mod2, arg2);
+                        results.innerHTML += `<div class="result-item">Произведение: ${formatResult(result)}</div>`;
+                        break;
+                    case 'divide':
+                        result = divideExponentialComplex(mod1, arg1, mod2, arg2);
+                        results.innerHTML += `<div class="result-item">Частное: ${formatResult(result)}</div>`;
+                        break;
+                    default:
+                        break;
+                }
+            } else if (formType === 'trigonometric') {
+                switch (op) {
+                    case 'add':
+                        result = addTrigonometricComplex(mod1, arg1, mod2, arg2);
+                        results.innerHTML += `<div class="result-item">Сумма: ${formatResult(result)}</div>`;
+                        break;
+                    case 'subtract':
+                        result = subtractTrigonometricComplex(mod1, arg1, mod2, arg2);
+                        results.innerHTML += `<div class="result-item">Разность: ${formatResult(result)}</div>`;
+                        break;
+                    case 'multiply':
+                        result = multiplyTrigonometricComplex(mod1, arg1, mod2, arg2);
+                        results.innerHTML += `<div class="result-item">Произведение: ${formatResult(result)}</div>`;
+                        break;
+                    case 'divide':
+                        result = divideTrigonometricComplex(mod1, arg1, mod2, arg2);
+                        results.innerHTML += `<div class="result-item">Частное: ${formatResult(result)}</div>`;
+                        break;
+                    default:
+                        break;
+                }
             }
         });
     });
@@ -105,36 +140,53 @@ document.addEventListener('DOMContentLoaded', function() {
         showInputFields();
     });
 
-    function addComplex(mod1, arg1, mod2, arg2) {
+    function addExponentialComplex(mod1, arg1, mod2, arg2) {
         const mod = mod1 + mod2;
         const arg = arg1 + arg2;
-          
         return { mod, arg };
     }
 
-    function subtractComplex(mod1, arg1, mod2, arg2) {
+    function subtractExponentialComplex(mod1, arg1, mod2, arg2) {
         const mod = mod1 - mod2;
-        const arg = arg1 + arg2;
-          
+        const arg = arg1 - arg2;
+        return { mod, arg };
+    }
+
+    function multiplyExponentialComplex(mod1, arg1, mod2, arg2) {
+        const mod = mod1 * mod2 + ((arg1 * arg2) * (-1));
+        const arg = mod1 * arg2 + arg1 * mod2;
+        return { mod, arg };
+    }
+
+    function divideExponentialComplex(mod1, arg1, mod2, arg2) {
+        let denominator = mod2 * mod2 + arg2 * arg2;
+        let modIntermediate = mod1 * mod2 + arg1 * arg2;
+        let argIntermediate = arg1 * mod2 - mod1 * arg2;
+        let mod = modIntermediate / denominator;
+        let arg = argIntermediate / denominator;
+        return { mod, arg };
+    }
+
+    function addTrigonometricComplex(mod1, arg1, mod2, arg2) {
+        
+    
         return { mod, arg };
     }
     
+    function subtractTrigonometricComplex(mod1, arg1, mod2, arg2) {
 
-    function multiplyComplex(mod1, arg1, mod2, arg2) {
-        const mod = mod1 * mod2 + ((arg1 * arg2) * (-1));
-        const arg = mod1 * arg2 + arg1 * mod2;
-
+    
         return { mod, arg };
     }
+    
+    function multiplyTrigonometricComplex(mod1, arg1, mod2, arh2) {
 
-    function divideComplex(mod1, arg1, mod2, arg2) {
-        let denominator = mod2 * mod2 + arg2 * arg2;
+    
+        return { mod, arg };
+    }
+    
+    function divideTrigonometricComplex(mod1, arg1, mod2, arg2) {
 
-        let modIntermediate = mod1 * mod2 + arg1 * arg2;
-        let argIntermediate = arg1 * mod2 - mod1 * arg2;
-
-        let mod = modIntermediate / denominator;
-        let arg = argIntermediate / denominator;
 
         return { mod, arg };
     }
@@ -143,7 +195,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const formType = form.elements['form'].value;
         if (formType === 'exponential') {
             return `${result.mod.toFixed(2)} + ${result.arg.toFixed(2)}i`;
-        } else {
+        } else if (formType === 'trigonometric') {
             return `${result.mod.toFixed(2)} + ${result.arg.toFixed(2)}i`;
         }
     }
