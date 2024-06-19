@@ -2,47 +2,46 @@ body {
     font-family: 'Roboto', sans-serif;
     background-color: #f0f0f0;
     margin: 0;
-    padding: 20px;
+    padding: 5vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
 }
 
 .calculator {
     background-color: white;
-    padding: 20px;
-    border-radius: 10px;
+    padding: 3.5vh;
+    border-radius: 2vh;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 400px;
+    width: 60vh;
 }
 
 h1 {
-    font-size: 24px;
-    margin-bottom: 20px;
+    font-size: 4.5vh;
+    margin-bottom: 2.5vh;
 }
 
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 1.5vh;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 0.5vh;
 }
 
 #input-fields input {
-    width: calc(50% - 10px);
-    margin-right: 10px;
-    margin-bottom: 10px;
+    width: calc(50% - 2vh);
+    margin-right: 1vh;
+    margin-bottom: 1vh;
 }
 
 button {
     background-color: #007bff;
     color: white;
     border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
+    padding: 1vh 2vh;
+    border-radius: 0.5vh;
     cursor: pointer;
 }
 
@@ -50,40 +49,40 @@ button#clear {
     background-color: #dc3545;
 }
 
-button:hover {
+button {
     opacity: 0.8;
 }
 
 input.error {
-    border: 2px solid red;
+    border: 0.3vh solid red;
 }
 
 #error {
     color: red;
-    margin-top: 10px;
+    margin-top: 0.5vh;
 }
 
 #results {
-    margin-top: 20px;
-    padding: 10px;
-    border: 1px solid #ddd;
+    margin-top: 3vh;
+    padding: 1.5vh;
+    border: 0.3vh solid #ddd;
     background-color: #f9f9f9;
-    border-radius: 5px;
+    border-radius: 1vh;
 }
 
 .result-item {
-    margin-bottom: 10px;
-    padding: 10px;
+    margin-bottom: 1vh;
+    padding: 1vh;
     background-color: #e9ecef;
-    border-radius: 5px;
-    border: 1px solid #ddd;
+    border-radius: 0.5vh;
+    border: 0.1vh solid #ddd;
 }
 
 #developer-links {
-    margin-top: 20px;
+    margin-top: 2vh;
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 2vh;
 }
 
 #developer-links a {
@@ -91,6 +90,20 @@ input.error {
 }
 
 .icon {
-    width: 32px; 
-    height: 32px;
+    width: 6vh;
+    height: 6vh;
+}
+
+@media (max-width: 1280px) {
+    #input-fields input {
+        width: calc(100% - 2vh);
+        margin-right: 0;
+    }
+}
+
+@media (max-width: 1920px) {
+    #input-fields input {
+        width: calc(100% - 2vh);
+        margin-right: 0;
+    }
 }

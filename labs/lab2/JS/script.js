@@ -32,8 +32,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     <label>Первое число:</label>
                     <div class="input-fields">
                         <input type="number" step="any" name="mod1" placeholder="Модуль" required>
-                        <input type="number" step="any" name="arg1angleA" placeholder="Угол" required>
-                        <input type="number" step="any" name="arg1angleB" placeholder="Угол" required>
+                        <input type="number" step="any" name="arg1angleA" placeholder="Угол(в градусах)" required>
+                        <input type="number" step="any" name="arg1angleB" placeholder="Угол(в градусах)" required>
                     </div>
                 </div>
                 <div class="form-group">
