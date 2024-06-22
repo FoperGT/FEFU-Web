@@ -161,6 +161,11 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    const resetSortButton = document.getElementById('reset-sort-button');
+    resetSortButton.addEventListener('click', () => {
+        renderTable(allPlayers);
+    });
+    
     renderTable(allPlayers);
-    window.allPlayers = allPlayers; 
+    window.allPlayers = allPlayers;     
 });

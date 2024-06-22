@@ -158,3 +158,23 @@ button:hover {
     cursor: pointer;
     color: black;
 }
+
+#reset-sort-button {
+    margin: 10px;
+    padding: 5px 10px;
+    cursor: pointer;
+    display: block;
+    margin: 20px auto;
+}
+
+#reset-sort-button-modal {
+    margin: 10px;
+    padding: 5px 10px;
+    cursor: pointer;
+    display: block;
+    margin: 20px auto;
+}
+
+.no-scroll {
+    overflow: hidden;
+}

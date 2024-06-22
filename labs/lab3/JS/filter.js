@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const filterModal = document.getElementById('filter-modal');
     const closeButton = document.querySelector('.close');
     const applyFilterButton = document.getElementById('apply-filter-button');
+    const resetSortButton = document.getElementById('reset-sort-button-modal');
 
     const clubs = [
         'Арсенал', 'Астон Вилла', 'Борнмут', 'Брайтон энд Хоув Альбион', 'Брентфорд',
@@ -29,15 +30,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
     filterButton.addEventListener('click', () => {
         filterModal.style.display = 'block';
+        document.body.classList.add('no-scroll');
     });
 
     closeButton.addEventListener('click', () => {
         filterModal.style.display = 'none';
+        document.body.classList.remove('no-scroll');
     });
 
     window.onclick = (event) => {
         if (event.target === filterModal) {
             filterModal.style.display = 'none';
+            document.body.classList.remove('no-scroll');
         }
     };
 
@@ -148,7 +152,7 @@ document.addEventListener('DOMContentLoaded', function() {
         rows.forEach(row => filterTableBody.appendChild(row));
     }
 
-    applyFilterButton.addEventListener('click', () => {
+    function applyFilter() {
         const nameFilter = document.getElementById('name-filter').value.trim().toLowerCase();
         const clubFilter = document.getElementById('club-filter').value.trim().toLowerCase();
         const positionFilter = document.getElementById('position-filter').value.trim().toLowerCase();
@@ -222,7 +226,14 @@ document.addEventListener('DOMContentLoaded', function() {
             return true;
         });
 
+        window.filteredPlayers = filteredPlayers;
         renderFilterTable(filteredPlayers);
+    }
+
+    applyFilterButton.addEventListener('click', applyFilter);
+
+    resetSortButton.addEventListener('click', () => {
+        renderFilterTable(window.filteredPlayers || window.allPlayers);
     });
 
     const modalContent = document.querySelector('.modal-content');
