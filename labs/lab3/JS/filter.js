@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const closeButton = document.querySelector('.close');
     const applyFilterButton = document.getElementById('apply-filter-button');
     const resetSortButton = document.getElementById('reset-sort-button-modal');
+    const applySortButtonModal = document.getElementById('apply-sort-button-modal');
 
     const clubs = [
         'Арсенал', 'Астон Вилла', 'Борнмут', 'Брайтон энд Хоув Альбион', 'Брентфорд',
@@ -100,56 +101,6 @@ document.addEventListener('DOMContentLoaded', function() {
             modalTable.removeChild(oldBody);
         }
         modalTable.appendChild(filterTableBody);
-
-        addSortButtonsToFilterTable();
-    }
-
-    function addSortButtonsToFilterTable() {
-        const filterTable = document.querySelector('#filter-modal table');
-        const headers = filterTable.querySelectorAll('th');
-
-        headers.forEach(header => {
-            const existingSortButton = header.querySelector('.sort-button');
-            if (existingSortButton) {
-                header.removeChild(existingSortButton);
-            }
-        });
-
-        headers.forEach((header, index) => {
-            const sortButton = document.createElement('button');
-            sortButton.classList.add('sort-button');
-            sortButton.dataset.index = index;
-            sortButton.innerHTML = '&#8645;';
-            header.appendChild(sortButton);
-
-            let ascending = true;
-            sortButton.addEventListener('click', () => {
-                const type = header.getAttribute('data-type');
-                sortFilteredTable(index, type, ascending);
-                ascending = !ascending;
-            });
-        });
-    }
-
-    function sortFilteredTable(columnIndex, type, ascending) {
-        const filterTable = document.querySelector('#filter-modal table');
-        const filterTableBody = filterTable.querySelector('tbody');
-        const rows = Array.from(filterTableBody.rows);
-
-        rows.sort((a, b) => {
-            let valA = a.cells[columnIndex].innerText;
-            let valB = b.cells[columnIndex].innerText;
-
-            if (type === 'number') {
-                valA = parseFloat(valA);
-                valB = parseFloat(valB);
-                return ascending ? valA - valB : valB - valA;
-            } else {
-                return ascending ? valA.localeCompare(valB) : valB.localeCompare(valA);
-            }
-        });
-
-        rows.forEach(row => filterTableBody.appendChild(row));
     }
 
     function applyFilter() {
@@ -236,6 +187,66 @@ document.addEventListener('DOMContentLoaded', function() {
         renderFilterTable(window.filteredPlayers || window.allPlayers);
     });
 
+    applySortButtonModal.addEventListener('click', () => {
+        const firstSortField = document.getElementById('first-sort-field-modal').value;
+        const firstSortOrder = document.getElementById('first-sort-order-modal').value === 'asc' ? 1 : -1;
+        const secondSortField = document.getElementById('second-sort-field-modal').value;
+        const secondSortOrder = document.getElementById('second-sort-order-modal').value === 'asc' ? 1 : -1;
+
+        const fieldIndexMap = {
+            'name': 0,
+            'club': 1,
+            'position': 2,
+            'goals': 3,
+            'assists': 4,
+            'yellowCards': 5,
+            'redCards': 6,
+            'matches': 7,
+            'minutes': 8,
+            'averageRating': 9
+        };
+
+        const firstSortIndex = fieldIndexMap[firstSortField];
+        const secondSortIndex = fieldIndexMap[secondSortField];
+
+        const filterTable = document.querySelector('#filter-modal table');
+        const filterTableBody = filterTable.querySelector('tbody');
+        const rows = Array.from(filterTableBody.rows);
+
+        rows.sort((a, b) => {
+            let valA = a.cells[firstSortIndex].innerText;
+            let valB = b.cells[firstSortIndex].innerText;
+
+            let comparison = 0;
+            if (!isNaN(valA) && !isNaN(valB)) {
+                valA = parseFloat(valA);
+                valB = parseFloat(valB);
+                comparison = valA - valB;
+            } else {
+                comparison = valA.localeCompare(valB);
+            }
+
+            if (comparison === 0) {
+                valA = a.cells[secondSortIndex].innerText;
+                valB = b.cells[secondSortIndex].innerText;
+
+                if (!isNaN(valA) && !isNaN(valB)) {
+                    valA = parseFloat(valA);
+                    valB = parseFloat(valB);
+                    comparison = valA - valB;
+                } else {
+                    comparison = valA.localeCompare(valB);
+                }
+
+                return comparison * secondSortOrder;
+            }
+
+            return comparison * firstSortOrder;
+        });
+
+        rows.forEach(row => filterTableBody.appendChild(row));
+    });
+
     const modalContent = document.querySelector('.modal-content');
     const filterTable = document.createElement('table');
     filterTable.innerHTML = `
@@ -255,6 +266,4 @@ document.addEventListener('DOMContentLoaded', function() {
         </thead>
     `;
     modalContent.appendChild(filterTable);
-
-    addSortButtonsToFilterTable();
 });
