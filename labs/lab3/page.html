@@ -12,14 +12,92 @@
     <div class="content-wrapper">
         <h1>Статистика игроков Премьер-лиги</h1>
 
+        <div class="sort-controls">
+            <label for="first-sort-field">Первое поле для сортировки:</label>
+            <select id="first-sort-field">
+                <option value="name">Имя</option>
+                <option value="club">Клуб</option>
+                <option value="position">Позиция</option>
+                <option value="goals">Голы</option>
+                <option value="assists">Ассисты</option>
+                <option value="yellowCards">Желтые карточки</option>
+                <option value="redCards">Красные карточки</option>
+                <option value="matches">Матчи</option>
+                <option value="minutes">Минуты</option>
+                <option value="averageRating">Средний рейтинг</option>
+            </select>
+            <select id="first-sort-order">
+                <option value="asc">По возрастанию</option>
+                <option value="desc">По убыванию</option>
+            </select>
+
+            <label for="second-sort-field">Второе поле для сортировки:</label>
+            <select id="second-sort-field">
+                <option value="name">Имя</option>
+                <option value="club">Клуб</option>
+                <option value="position">Позиция</option>
+                <option value="goals">Голы</option>
+                <option value="assists">Ассисты</option>
+                <option value="yellowCards">Желтые карточки</option>
+                <option value="redCards">Красные карточки</option>
+                <option value="matches">Матчи</option>
+                <option value="minutes">Минуты</option>
+                <option value="averageRating">Средний рейтинг</option>
+            </select>
+            <select id="second-sort-order">
+                <option value="asc">По возрастанию</option>
+                <option value="desc">По убыванию</option>
+            </select>
+            <button id="apply-sort-button">Применить сортировку</button>
+        </div>
+
         <button id="filter-button">Фильтр</button>
         <button id="reset-sort-button">Сбросить сортировку</button>
 
         <div id="filter-modal" class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>
-                <h2>Фильтры</h2>
 
+                <div class="sort-controls">
+                    <label for="first-sort-field-modal">Первое поле для сортировки:</label>
+                    <select id="first-sort-field-modal">
+                        <option value="name">Имя</option>
+                        <option value="club">Клуб</option>
+                        <option value="position">Позиция</option>
+                        <option value="goals">Голы</option>
+                        <option value="assists">Ассисты</option>
+                        <option value="yellowCards">Желтые карточки</option>
+                        <option value="redCards">Красные карточки</option>
+                        <option value="matches">Матчи</option>
+                        <option value="minutes">Минуты</option>
+                        <option value="averageRating">Средний рейтинг</option>
+                    </select>
+                    <select id="first-sort-order-modal">
+                        <option value="asc">По возрастанию</option>
+                        <option value="desc">По убыванию</option>
+                    </select>
+        
+                    <label for="second-sort-field-modal">Второе поле для сортировки:</label>
+                    <select id="second-sort-field-modal">
+                        <option value="name">Имя</option>
+                        <option value="club">Клуб</option>
+                        <option value="position">Позиция</option>
+                        <option value="goals">Голы</option>
+                        <option value="assists">Ассисты</option>
+                        <option value="yellowCards">Желтые карточки</option>
+                        <option value="redCards">Красные карточки</option>
+                        <option value="matches">Матчи</option>
+                        <option value="minutes">Минуты</option>
+                        <option value="averageRating">Средний рейтинг</option>
+                    </select>
+                    <select id="second-sort-order-modal">
+                        <option value="asc">По возрастанию</option>
+                        <option value="desc">По убыванию</option>
+                    </select>
+                    <button id="apply-sort-button-modal">Применить сортировку</button>
+                </div>
+
+                <h2>Фильтры</h2>
                 <div class="form-grid">
                     <label for="name-filter">Имя:</label>
                     <input type="text" id="name-filter">
@@ -81,23 +159,22 @@
                     <button id="apply-filter-button">Применить</button>
                 </div>
                 <button id="reset-sort-button-modal">Сбросить сортировку</button>
-
             </div>
         </div>
 
         <table id="players-table">
             <thead>
                 <tr>
-                    <th data-type="string">Имя <button class="sort-button" data-index="0">&#8645;</button></th>
-                    <th data-type="string">Клуб <button class="sort-button" data-index="1">&#8645;</button></th>
-                    <th data-type="string">Позиция <button class="sort-button" data-index="2">&#8645;</button></th>
-                    <th data-type="number">Голы <button class="sort-button" data-index="3">&#8645;</button></th>
-                    <th data-type="number">Ассисты <button class="sort-button" data-index="4">&#8645;</button></th>
-                    <th data-type="number">Желтые карточки <button class="sort-button" data-index="5">&#8645;</button></th>
-                    <th data-type="number">Красные карточки <button class="sort-button" data-index="6">&#8645;</button></th>
-                    <th data-type="number">Матчи <button class="sort-button" data-index="7">&#8645;</button></th>
-                    <th data-type="number">Минуты <button class="sort-button" data-index="8">&#8645;</button></th>
-                    <th data-type="number">Средний рейтинг <button class="sort-button" data-index="9">&#8645;</button></th>
+                    <th data-type="string">Имя</th>
+                    <th data-type="string">Клуб</th>
+                    <th data-type="string">Позиция</th>
+                    <th data-type="number">Голы</th>
+                    <th data-type="number">Ассисты</th>
+                    <th data-type="number">Желтые карточки</th>
+                    <th data-type="number">Красные карточки</th>
+                    <th data-type="number">Матчи</th>
+                    <th data-type="number">Минуты</th>
+                    <th data-type="number">Средний рейтинг</th>
                 </tr>
             </thead>
             <tbody>

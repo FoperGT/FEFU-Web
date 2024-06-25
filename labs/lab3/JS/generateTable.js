@@ -12,13 +12,13 @@ document.addEventListener('DOMContentLoaded', function() {
         'Liam', 'Noah', 'Ethan', 'Oliver', 'Lucas', 'Mason', 'Logan', 'Benjamin', 'Jacob', 'Alexander',
         'Hugo', 'Lorenzo', 'Diego', 'Miguel', 'Pablo', 'Sergio', 'Joaquín', 'Fernando', 'Gonzalo', 'Julián',
         'Fabio', 'Ricardo', 'Leonardo', 'Gustavo', 'Esteban', 'Cristiano', 'Rodrigo', 'Emilio', 'Jorge', 'Raul'
-        ];
-        
+    ];
+    
     const lastNames = [
-    'García', 'Martínez', 'Rodríguez', 'López', 'Hernández', 'Pérez', 'González', 'Gómez', 'Sánchez', 'Díaz',
-    'Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Miller', 'Davis', 'Garcia', 'Martinez', 'Lopez',
-    'Müller', 'Schmidt', 'Schneider', 'Fischer', 'Weber', 'Meyer', 'Wagner', 'Becker', 'Hoffmann', 'Schulz',
-    'Silva', 'Santos', 'Ferreira', 'Pereira', 'Oliveira', 'Costa', 'Rodrigues', 'Gomes', 'Fernandes', 'Carvalho'
+        'García', 'Martínez', 'Rodríguez', 'López', 'Hernández', 'Pérez', 'González', 'Gómez', 'Sánchez', 'Díаз',
+        'Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Miller', 'Davis', 'Garcia', 'Martinez', 'Lopez',
+        'Müller', 'Schmidt', 'Schneider', 'Fischer', 'Weber', 'Meyer', 'Wagner', 'Becker', 'Hoffmann', 'Schulz',
+        'Silva', 'Santos', 'Ferreira', 'Pereira', 'Oliveira', 'Costa', 'Rodrigues', 'Gomes', 'Fernandes', 'Carvalho'
     ];
 
     const positions = ['Вратарь', 'Защитник', 'Полузащитник', 'Нападающий'];
@@ -135,30 +135,33 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    function sortTable(columnIndex, type, ascending) {
-        const sortedData = [...allPlayers].sort((a, b) => {
-            let valA = Object.values(a)[columnIndex];
-            let valB = Object.values(b)[columnIndex];
+    function compareValues(valA, valB, order) {
+        if (valA < valB) {
+            return order === 'asc' ? -1 : 1;
+        }
+        if (valA > valB) {
+            return order === 'asc' ? 1 : -1;
+        }
+        return 0;
+    }
 
-            if (type === 'number') {
-                valA = parseFloat(valA);
-                valB = parseFloat(valB);
-                return ascending ? valA - valB : valB - valA;
-            } else {
-                return ascending ? valA.localeCompare(valB) : valB.localeCompare(valA);
+    function sortTable(field1, order1, field2, order2) {
+        const sortedData = [...allPlayers].sort((a, b) => {
+            let comparison = compareValues(a[field1], b[field1], order1);
+            if (comparison === 0) {
+                comparison = compareValues(a[field2], b[field2], order2);
             }
+            return comparison;
         });
         renderTable(sortedData);
     }
 
-    document.querySelectorAll('.sort-button').forEach(button => {
-        let ascending = true;
-        button.addEventListener('click', () => {
-            const index = button.getAttribute('data-index');
-            const type = document.querySelectorAll('th')[index].getAttribute('data-type');
-            sortTable(index, type, ascending);
-            ascending = !ascending; 
-        });
+    document.getElementById('apply-sort-button').addEventListener('click', () => {
+        const firstSortField = document.getElementById('first-sort-field').value;
+        const firstSortOrder = document.getElementById('first-sort-order').value;
+        const secondSortField = document.getElementById('second-sort-field').value;
+        const secondSortOrder = document.getElementById('second-sort-order').value;
+        sortTable(firstSortField, firstSortOrder, secondSortField, secondSortOrder);
     });
 
     const resetSortButton = document.getElementById('reset-sort-button');
