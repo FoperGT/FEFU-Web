@@ -32,35 +32,33 @@ const circle = svg.append("circle")
 
 function startAnimation() {
     const duration = +document.getElementById("duration").value;
+    const scaleEnabled = document.getElementById("scaleToggle").checked;
+    const scaleValue = +document.getElementById("scaleEffect").value;
+    const rotationEnabled = document.getElementById("rotationToggle").checked;
     const path = svg.select("path");
     const totalLength = path.node().getTotalLength();
 
-    svg.selectAll(".moving-point").remove();
-
-    svg.selectAll(".moving-point")
-        .data(points)
-        .enter().append("circle")
-        .attr("class", "moving-point")
-        .attr("r", 5)
-        .attr("cx", d => d.x)
-        .attr("cy", d => d.y)
-        .attr("fill", "red");
-
     circle
-        .style("display", null)
+        .style("display", null) 
         .transition()
         .duration(duration)
-        .attrTween("transform", translateAlong(path.node()))
+        .ease(d3.easeLinear)
+        .attrTween("transform", translateAndScale(path.node(), scaleEnabled, scaleValue, rotationEnabled, duration))
         .on("end", () => {
         });
 }
 
-function translateAlong(path) {
+function translateAndScale(path, scaleEnabled, scaleValue, rotationEnabled, duration) {
     const totalLength = path.getTotalLength();
     return function() {
         return function(t) {
             const point = path.getPointAtLength((1 - t) * totalLength);
-            return `translate(${point.x},${point.y})`;
+            let scale = 1;
+            if (scaleEnabled) {
+                scale = scaleValue + 0.5 * Math.sin(t * Math.PI * 2); 
+            }
+            const rotation = rotationEnabled ? 360 * (t * duration / 1000) : 0;
+            return `translate(${point.x},${point.y}) scale(${scale}) rotate(${rotation})`;
         };
     };
 }
