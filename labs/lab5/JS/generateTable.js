@@ -134,40 +134,6 @@ document.addEventListener('DOMContentLoaded', function() {
             tableBody.appendChild(row);
         });
     }
-
-    function compareValues(valA, valB, order) {
-        if (valA < valB) {
-            return order === 'asc' ? -1 : 1;
-        }
-        if (valA > valB) {
-            return order === 'asc' ? 1 : -1;
-        }
-        return 0;
-    }
-
-    function sortTable(field1, order1, field2, order2) {
-        const sortedData = [...allPlayers].sort((a, b) => {
-            let comparison = compareValues(a[field1], b[field1], order1);
-            if (comparison === 0) {
-                comparison = compareValues(a[field2], b[field2], order2);
-            }
-            return comparison;
-        });
-        renderTable(sortedData);
-    }
-
-    document.getElementById('apply-sort-button').addEventListener('click', () => {
-        const firstSortField = document.getElementById('first-sort-field').value;
-        const firstSortOrder = document.getElementById('first-sort-order').value;
-        const secondSortField = document.getElementById('second-sort-field').value;
-        const secondSortOrder = document.getElementById('second-sort-order').value;
-        sortTable(firstSortField, firstSortOrder, secondSortField, secondSortOrder);
-    });
-
-    const resetSortButton = document.getElementById('reset-sort-button');
-    resetSortButton.addEventListener('click', () => {
-        renderTable(allPlayers);
-    });
     
     renderTable(allPlayers);
     window.allPlayers = allPlayers;    
