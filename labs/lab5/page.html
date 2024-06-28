@@ -13,6 +13,29 @@
     <div class="content-wrapper">
         <h1>Статистика игроков Премьер-лиги</h1>
 
+        <div id="controls">
+            <label for="x-axis-select">Выберите ось X:</label>
+            <select id="x-axis-select">
+                <option value="club">Клуб</option>
+                <option value="position">Позиция</option>
+            </select>
+
+            <label for="y-goals-checkbox">Голы:</label>
+            <input type="checkbox" id="y-goals-checkbox" checked>
+
+            <label for="y-assists-checkbox">Ассисты:</label>
+            <input type="checkbox" id="y-assists-checkbox" checked>
+
+            <label for="display-mode-select">Режим отображения:</label>
+            <select id="display-mode-select">
+                <option value="points">Точки</option>
+                <option value="lines">Точки с линиями</option>
+                <option value="bars">Столбцы</option>
+            </select>
+        </div>
+
+        <svg id="chart" width="950" height="500"></svg>
+
         <table id="players-table">
             <thead>
                 <tr>
@@ -31,22 +54,6 @@
             <tbody>
             </tbody>
         </table>
-        
-        <div>
-            <label for="x-axis-select">Ось X:</label>
-            <select id="x-axis-select">
-                <option value="position">Позиция</option>
-                <option value="club">Клуб</option>
-            </select>
-
-            <label for="y-axis-select">Ось Y:</label>
-            <select id="y-axis-select">
-                <option value="goals">Голы</option>
-                <option value="assists">Ассисты</option>
-            </select>
-        </div>
-
-        <svg id="chart" width="800" height="600"></svg>
     </div>
 
     <script src="JS/generateTable.js"></script>

@@ -21,24 +21,14 @@
             <label for="rotationToggle">Вращаться:</label>
             <input type="checkbox" id="rotationToggle" name="rotationToggle"><br><br>
 
-            <button type="button" onclick="startAnimation()">Запустить анимацию</button>
-            <button type="button" onclick="clearSvg()">Очистить</button>
+            <button class="button" type="button" onclick="startAnimation()">Запустить анимацию</button>
+            <button class="button" id="clear" type="button" onclick="clearSvg()">Очистить</button>
         </form>
     </div>
 
     <div class="player">
         <svg width="820" height="420">
-            <defs>
-                <pattern id="checkerboard" width="20" height="20">
-                    <rect width="10" height="10" fill="black"></rect>
-                    <rect x="10" width="10" height="10" fill="white"></rect>
-                    <rect y="10" width="10" height="10" fill="white"></rect>
-                    <rect x="10" y="10" width="10" height="10" fill="black"></rect>
-                </pattern>
-                <mask id="circleMask">
-                    <circle cx="0" cy="0" r="10" fill="url(#checkerboard)"></circle>
-                </mask>
-            </defs>
+            
         </svg>
     </div>
 

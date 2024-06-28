@@ -157,3 +157,15 @@ button:hover {
 .no-scroll {
     overflow: hidden;
 }
+
+.bar {
+    shape-rendering: crispEdges; 
+}
+
+.bar.first-half {
+    fill: black; 
+}
+
+.bar.second-half {
+    fill: red;
+}

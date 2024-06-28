@@ -1,5 +1,25 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 5vh;
+}
+
 .menu {
     text-align: center;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 1vh 2vh;
+    border-radius: 0.5vh;
+    cursor: pointer;
+}
+
+button#clear {
+    background-color: #dc3545;
 }
 
 .player {
@@ -12,5 +32,7 @@ svg {
     top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
-    border: 1px solid black;
+    background-color: white;
+    border-radius: 2vh;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }

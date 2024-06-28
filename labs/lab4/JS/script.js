@@ -4,14 +4,14 @@ const height = +svg.attr("height");
 
 let points = [];
 for (let x = 0; x <= width; x += 1) {
-    let y = 200 + 100 * Math.sin(x * Math.PI / 40);
+    let y = 200 + 80 * Math.sin(x * Math.PI / 40);
     points.push({ x: x, y: y });
 }
 
 function createPathData(points) {
     let pathData = `M${points[0].x},${points[0].y}`;
     for (let i = 1; i < points.length; i++) {
-        pathData += ` L${points[i].x},${points[i].y}`;
+        pathData += `L${points[i].x},${points[i].y}`;
     }
     return pathData;
 }
@@ -24,11 +24,37 @@ svg.append("path")
     .attr("stroke-width", 3)
     .attr("fill", "none");
 
-const circle = svg.append("circle")
-    .attr("r", 10)
-    .attr("fill", "black")
-    .attr("mask", "url(#circleMask)")
-    .style("display", "none");
+function drawSmile() {
+    let smile = svg.append("g")
+        .style("stroke", "black")
+        .style("stroke-width", 0.4) 
+        .style("fill", "black")
+        .style("display", "none");
+
+    smile.append("circle")
+        .attr("cx", 0)
+        .attr("cy", 0)
+        .attr("r", 10) 
+        .style("fill", "red");
+
+    smile.append("circle")
+        .attr("cx", -4)
+        .attr("cy", -2)
+        .attr("r", 1) 
+
+    smile.append("circle")
+        .attr("cx", 4)
+        .attr("cy", -2)
+        .attr("r", 1); 
+
+    let arc = d3.arc()
+        .innerRadius(7)  
+        .outerRadius(7); 
+
+    return smile;
+}
+
+const smiley = drawSmile();
 
 function startAnimation() {
     const duration = +document.getElementById("duration").value;
@@ -38,7 +64,7 @@ function startAnimation() {
     const path = svg.select("path");
     const totalLength = path.node().getTotalLength();
 
-    circle
+    smiley
         .style("display", null) 
         .transition()
         .duration(duration)
@@ -64,6 +90,6 @@ function translateAndScale(path, scaleEnabled, scaleValue, rotationEnabled, dura
 }
 
 function clearSvg() {
-    circle.attr("transform", "")
+    smiley.attr("transform", "")
         .style("display", "none");
 }
