@@ -1,0 +1,50 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 5vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    background-color: white;
+    padding: 3.5vh;
+    border-radius: 2vh;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 180vh;
+}
+
+h1 {
+    font-size: 4.5vh;
+    margin-bottom: 2.5vh;
+    text-align: center;
+}
+
+.accordion-item {
+    margin-bottom: 1.5vh;
+}
+
+.accordion-header {
+    cursor: pointer;
+    background: #f0f0f0;
+    padding: 1vh;
+    font-weight: bold;
+    border-radius: 0.5vh;
+}
+
+.accordion-header.active {
+    background-color: #dcdcdc;
+}
+
+.accordion-content {
+    padding: 1vh;
+    border: 1px solid #ddd;
+    border-radius: 0.5vh;
+    background-color: #f9f9f9;
+}
+
+.accordion-content.hidden {
+    display: none;
+}

@@ -1,0 +1,17 @@
+.head {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); 
+  align-items: center;
+  column-gap: 0.5vw;
+  justify-items: center;
+}
+
+.head div {
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+}
+
+.head img {
+  width: 70%; 
+}
