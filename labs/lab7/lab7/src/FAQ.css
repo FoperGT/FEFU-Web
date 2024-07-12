@@ -1,0 +1,31 @@
+.FAQ {
+    margin: 20px 0;
+  }
+  
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .faq-item {
+    width: 80%;
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .faq-item .question {
+    font-weight: bold;
+  }
+  
+  .faq-item .answer {
+    margin-top: 10px;
+  }
+  
+  .faq-item.active {
+    background-color: #f0f0f0;
+  }
+  
